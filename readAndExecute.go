@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net"
 	"os"
 	"os/exec"
 	"regexp"
@@ -149,10 +150,20 @@ func executeCommand(result *answer, received *receivedStruct, config *configurat
 	defer cancel()
 
 	var cmd *exec.Cmd
+
+	splitted := strings.Fields(received.commandLine)
+	if config.forceIPv4 {
+		for i := 0; i < len(splitted); i++ {
+			ip := net.ParseIP(splitted[i])
+			if ip != nil && len(ip) == net.IPv6len {
+				splitted[i] = ip[12:16].String()
+			}
+		}
+	}
 	if executeInShell(received.commandLine) {
-		cmd = exec.CommandContext(ctx, "/bin/sh", "-c", received.commandLine)
+		args := append([]string{"-c"}, splitted...)
+		cmd = exec.CommandContext(ctx, "/bin/sh", args...)
 	} else {
-		splitted := strings.Fields(received.commandLine)
 		cmd = exec.CommandContext(ctx, splitted[0], splitted[1:]...)
 	}
 

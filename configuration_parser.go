@@ -56,6 +56,7 @@ type configurationStruct struct {
 	startTime   float64
 	finishTime  float64
 	latency     float64
+	forceIPv4   bool
 }
 
 func setDefaultValues(result *configurationStruct) {
@@ -206,6 +207,8 @@ func readSetting(values []string, result *configurationStruct) {
 		result.finishTime = getFloat(value)
 	case "latency":
 		result.latency = getFloat(value)
+	case "forceIPv4":
+		result.forceIPv4 = getBool(value)
 	}
 }
 

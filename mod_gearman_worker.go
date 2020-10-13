@@ -226,6 +226,9 @@ func initConfiguration(name, build string, helpFunc helpCallback, verifyFunc ver
 			}
 			config.message = os.Args[i+1]
 			i++
+		case arg == "--forceIPv4":
+			config.forceIPv4 = true
+			i++
 		default:
 			s := strings.Trim(os.Args[i], "-")
 			sa := strings.SplitN(s, "=", 2)
@@ -360,6 +363,7 @@ func printUsage() {
 
 	fmt.Print("Miscellaneous:\n")
 	fmt.Print("       --workaround_rc_25\n")
+	fmt.Print("       --forceIPv4\n")
 	fmt.Print("\n")
 	fmt.Print("see README for a detailed explanation of all options.\n")
 	fmt.Print("\n")
