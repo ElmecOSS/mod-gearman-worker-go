@@ -207,7 +207,7 @@ func readSetting(values []string, result *configurationStruct) {
 		result.finishTime = getFloat(value)
 	case "latency":
 		result.latency = getFloat(value)
-	case "forceIPv4":
+	case "forceipv4":
 		result.forceIPv4 = true
 	}
 }
