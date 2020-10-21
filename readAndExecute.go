@@ -167,6 +167,8 @@ func executeCommand(result *answer, received *receivedStruct, config *configurat
 		cmd = exec.CommandContext(ctx, splitted[0], splitted[1:]...)
 	}
 
+	logger.Tracef("effective command: [[ %s ]]", cmd.String())
+
 	// byte buffer for output
 	var errbuf bytes.Buffer
 	var outbuf bytes.Buffer
