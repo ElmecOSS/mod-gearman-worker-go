@@ -51,12 +51,17 @@ dump:
 
 build: vendor
 	set -e; for CMD in $(CMDS); do \
-		cd ./cmd/$$CMD && go build -ldflags "-s -w -X main.Build=$(BUILD)" -o ../../$$CMD; cd ../..; \
+		cd ./cmd/$$CMD &&  CGO_ENABLED=0 go build -ldflags "-s -w -X main.Build=$(BUILD)" -o ../../$$CMD; cd ../..; \
 	done
 
 build-linux-amd64: vendor
 	set -e; for CMD in $(CMDS); do \
-		cd ./cmd/$$CMD && GOOS=linux GOARCH=amd64 go build -ldflags "-s -w -X main.Build=$(BUILD)" -o ../../$$CMD.linux.amd64; cd ../..; \
+		cd ./cmd/$$CMD && GOOS=linux GOARCH=amd64 CGO_ENABLED=0  go build -ldflags "-s -w -X main.Build=$(BUILD)" -o ../../$$CMD.linux.amd64; cd ../..; \
+	done
+
+build-linux-arm64: vendor
+	set -e; for CMD in $(CMDS); do \
+		cd ./cmd/$$CMD && GOOS=linux GOARCH=arm64 CGO_ENABLED=0  go build -ldflags "-s -w -X main.Build=$(BUILD)" -o ../../$$CMD.linux.arm64; cd ../..; \
 	done
 
 build-windows-i386: vendor
