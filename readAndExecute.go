@@ -161,8 +161,8 @@ func executeCommand(result *answer, received *receivedStruct, config *configurat
 		}
 	}
 	if executeInShell(received.commandLine) {
-		args := append([]string{"-c"}, splitted...)
-		cmd = exec.CommandContext(ctx, "/bin/sh", args...)
+		args := strings.Join(splitted, " ")
+		cmd = exec.CommandContext(ctx, "/bin/sh", "-c", args)
 	} else {
 		cmd = exec.CommandContext(ctx, splitted[0], splitted[1:]...)
 	}
