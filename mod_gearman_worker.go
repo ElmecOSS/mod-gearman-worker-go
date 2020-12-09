@@ -226,9 +226,6 @@ func initConfiguration(name, build string, helpFunc helpCallback, verifyFunc ver
 			}
 			config.message = os.Args[i+1]
 			i++
-		case arg == "--forceipv4":
-			config.forceIPv4 = true
-			i++
 		default:
 			s := strings.Trim(os.Args[i], "-")
 			sa := strings.SplitN(s, "=", 2)

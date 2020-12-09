@@ -13,6 +13,7 @@ type configurationStruct struct {
 	identifier                string
 	debug                     int
 	logfile                   string
+	debugResult               bool
 	logmode                   string
 	dupserver                 []string
 	eventhandler              bool
@@ -65,6 +66,7 @@ func setDefaultValues(result *configurationStruct) {
 	result.showErrorOutput = true
 	result.debug = 0
 	result.logmode = "automatic"
+	result.debugResult = false
 	result.dupResultsArePassive = true
 	result.dupServerBacklogQueueSize = 1000
 	result.gearmanConnectionTimeout = -1
@@ -75,6 +77,7 @@ func setDefaultValues(result *configurationStruct) {
 	result.minWorker = 1
 	result.maxWorker = 20
 	result.spawnRate = 1
+	result.forceIPv4 = false
 	hostname, _ := os.Hostname()
 	result.identifier = hostname
 	if result.identifier == "" {
@@ -135,6 +138,8 @@ func readSetting(values []string, result *configurationStruct) {
 		result.debug = getInt(value)
 	case "logfile":
 		result.logfile = value
+	case "debug-result":
+		result.debugResult = getBool(value)
 	case "logmode":
 		result.logmode = value
 	case "identifier":

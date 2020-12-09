@@ -219,6 +219,9 @@ func executeCommand(result *answer, received *receivedStruct, config *configurat
 
 	// extract stdout and stderr
 	result.output = string(bytes.TrimSpace((bytes.Trim(outbuf.Bytes(), "\x00"))))
+	if config.debugResult {
+		result.output = fmt.Sprintf("[WORKER: %s] %s", config.identifier, result.output)
+	}
 	if config.showErrorOutput && result.returnCode != 0 {
 		error := string(bytes.TrimSpace((bytes.Trim(errbuf.Bytes(), "\x00"))))
 		if error != "" {
