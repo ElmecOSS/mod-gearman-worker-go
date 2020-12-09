@@ -213,7 +213,7 @@ func readSetting(values []string, result *configurationStruct) {
 	case "latency":
 		result.latency = getFloat(value)
 	case "forceipv4":
-		result.forceIPv4 = true
+		result.forceIPv4 = getBool(value)
 	}
 }
 
